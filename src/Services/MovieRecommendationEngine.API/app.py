@@ -32,7 +32,7 @@ def combine_features(row):
 
 def get_title_from_index(index):
     if not df[df.index == index]["title"].empty:
-        return df[df.index == index]["title"].values[0]
+        return df[df.index == index]["id"].values[0]
     else:
         return []
 
@@ -69,7 +69,7 @@ def get_recommendations():
     sorted_similar_movies = sorted_similar_movies [0:int(number_of_elements)]
     
     for element in sorted_similar_movies:
-        recommended_movies.append(get_title_from_index(element[0]))
+        recommended_movies.append(int(get_title_from_index(element[0])))
     
     return jsonify(recommended_movies)
 
