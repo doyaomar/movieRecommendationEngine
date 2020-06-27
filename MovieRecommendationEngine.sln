@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CA289D7B-A9BB-4E1B-A06F-7F7C300C2476}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web App", "Web App", "{BD94FE3F-D62D-48CA-99A7-464D0FF5A180}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{24A8F2C5-F956-45BB-89C3-A5346ED6A7A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieRecommendationEngine.Client", "MovieRecommendationEngine.Client\MovieRecommendationEngine.Client.csproj", "{4D6D555B-1964-4B2E-9420-BA31FF255EF6}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MovieRecommendationEngine.API", "MovieRecommendationEngine.API\MovieRecommendationEngine.API.pyproj", "{464E47D5-30FB-432E-9C4F-123ACC8B2FA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D6D555B-1964-4B2E-9420-BA31FF255EF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D6D555B-1964-4B2E-9420-BA31FF255EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D6D555B-1964-4B2E-9420-BA31FF255EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D6D555B-1964-4B2E-9420-BA31FF255EF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{464E47D5-30FB-432E-9C4F-123ACC8B2FA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{464E47D5-30FB-432E-9C4F-123ACC8B2FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{464E47D5-30FB-432E-9C4F-123ACC8B2FA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{464E47D5-30FB-432E-9C4F-123ACC8B2FA5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BD94FE3F-D62D-48CA-99A7-464D0FF5A180} = {CA289D7B-A9BB-4E1B-A06F-7F7C300C2476}
+		{24A8F2C5-F956-45BB-89C3-A5346ED6A7A2} = {CA289D7B-A9BB-4E1B-A06F-7F7C300C2476}
+		{4D6D555B-1964-4B2E-9420-BA31FF255EF6} = {BD94FE3F-D62D-48CA-99A7-464D0FF5A180}
+		{464E47D5-30FB-432E-9C4F-123ACC8B2FA5} = {24A8F2C5-F956-45BB-89C3-A5346ED6A7A2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DED781C2-8D2E-456F-8EA7-7FA07D976ADD}
+	EndGlobalSection
+EndGlobal
