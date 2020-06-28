@@ -15,9 +15,6 @@ wsgi_app = app.wsgi_app
 
 ##########CONTENT BASED FILTERING
 
-def combine_features(row):
-    return row['keywords']+" "+row['cast']+" "+row['genres']+" "+row['director']
-
 def load_content_recommendations(): 
     content_df = pd.read_csv("Data/movie_dataset.csv")
     features = ['keywords','cast','genres','director']
@@ -32,8 +29,8 @@ def load_content_recommendations():
 def combine_features(row):
     return row['keywords']+" "+row['cast']+" "+row['genres']+" "+row['director']
 
-def get_title_from_index(index):
-    if not content_df[content_df.index == index]["title"].empty:
+def get_tmdbId_from_index(index):
+    if not content_df[content_df.index == index]["tmdbId"].empty:
         return content_df[content_df.index == index]["tmdbId"].values[0]
     else:
         return []
@@ -41,6 +38,12 @@ def get_title_from_index(index):
 def get_index_from_title(title):
     if not content_df[content_df.title.str.upper() == title.upper()].empty:
         return content_df[content_df.title.str.upper() == title.upper()]["index"].values[0]
+    else:
+        return []
+
+def get_index_from_tmdbId(tmdbId):
+    if not content_df[content_df.tmdbId == tmdbId].empty:
+        return content_df[content_df.tmdbId == tmdbId]["index"].values[0]
     else:
         return []
 
@@ -71,7 +74,7 @@ def get_content_recommendations():
     sorted_similar_movies = sorted_similar_movies [0:int(number_of_elements)]
     
     for element in sorted_similar_movies:
-        recommended_movies.append(int(get_title_from_index(element[0])))
+        recommended_movies.append(int(get_tmdbId_from_index(element[0])))
     
     return jsonify(recommended_movies)
 ##########CONTENT BASED FILTERING END
