@@ -44,7 +44,7 @@ def get_index_from_title(title):
     else:
         return []
 
-def get_similar_movies(movie_user_likes):
+def get_similar_movies_content(movie_user_likes):
     #creating new CountVectorizer() object
     cv = CountVectorizer()
     #feeding combined strings(movie contents) to CountVectorizer() object
@@ -67,7 +67,7 @@ def get_content_recommendations():
 
     print(movie_user_likes)
     recommended_movies = []
-    sorted_similar_movies = get_similar_movies(movie_user_likes)
+    sorted_similar_movies = get_similar_movies_content(movie_user_likes)
     sorted_similar_movies = sorted_similar_movies [0:int(number_of_elements)]
     
     for element in sorted_similar_movies:
