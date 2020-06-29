@@ -34,12 +34,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\item_similarityId_df.csv" />
     <Content Include="Data\item_similarity_df.csv" />
+    <Content Include="Data\_item_similarity_df.csv" />
     <Content Include="Data\links.csv" />
     <Content Include="Data\movies.csv" />
+    <Content Include="Data\_movie_dataset.csv" />
     <Content Include="Data\movie_dataset.csv" />
-    <Content Include="Data\new_movie_dataset.csv" />
     <Content Include="Data\ratings.csv" />
     <Content Include="Data\tags.csv" />
     <Content Include="requirements.txt" />
