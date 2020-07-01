@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MovieRecommendationEngine.Client.Models;
 
-namespace MovieRecommendationEngine.Client.Models
+namespace MovieRecommendationEngine.Client.Infrastructure
 {
     public partial class MovieLensContext : DbContext
     {
