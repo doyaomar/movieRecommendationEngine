@@ -2,7 +2,7 @@
 {
     public class AppSettings
     {
-        public string RecommendationEngineUrl { get; set; }
+        public string RecommendationEngineApiUrl { get; set; }
 
         public string ThemoviedbApiUrl { get; set; }
 

@@ -1,11 +1,13 @@
-﻿using System;
+﻿using MovieRecommendationEngine.Client.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MovieRecommendationEngine.Client.Abstractions
 {
-    public class IMovieRecommendationEngineService
+    public interface IMovieRecommendationEngineService
     {
+        Task<IEnumerable<int>> GetRecommendationByCollabFiltering(List<RatingDto> watchedMovies);
+
+        Task<IEnumerable<int>> GetRecommendationByContentFiltering(int movieId, int numberOfElements);
     }
 }

@@ -14,8 +14,9 @@ namespace MovieRecommendationEngine.Client.Infrastructure
         {
         }
 
-        public virtual DbSet<Links> Links { get; set; }
-        public virtual DbSet<Movies> Movies { get; set; }
+        public virtual DbSet<Link> Links { get; set; }
+
+        public virtual DbSet<Movie> Movies { get; set; }
 
         //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //        {
@@ -28,8 +29,10 @@ namespace MovieRecommendationEngine.Client.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Links>(entity =>
+            modelBuilder.Entity<Link>(entity =>
             {
+                entity.ToTable("Links");
+
                 entity.HasNoKey();
 
                 entity.Property(e => e.ImdbId).HasColumnName("imdbId");
@@ -45,8 +48,10 @@ namespace MovieRecommendationEngine.Client.Infrastructure
                     .HasConstraintName("FK_Links_Movies");
             });
 
-            modelBuilder.Entity<Movies>(entity =>
+            modelBuilder.Entity<Movie>(entity =>
             {
+                entity.ToTable("Movies");
+
                 entity.HasKey(e => e.MovieId);
 
                 entity.Property(e => e.MovieId)
