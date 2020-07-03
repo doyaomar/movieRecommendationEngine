@@ -10,8 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MovieRecommendationEngine.Client.Abstractions;
 using MovieRecommendationEngine.Client.Data;
+using MovieRecommendationEngine.Client.Infrastructure;
 using MovieRecommendationEngine.Client.Models;
+using MovieRecommendationEngine.Client.Services;
 
 namespace MovieRecommendationEngine.Client
 {
@@ -27,14 +30,20 @@ namespace MovieRecommendationEngine.Client
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
-        {
+        {           
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
+            services.Configure<AppSettings>(Configuration);
+
             //adding ef core context
             services.AddDbContext<MovieLensContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MovieLensDatabase")));
+
+            services.AddTransient<IMovieRecommendationEngineRepository, MovieRecommendationEngineRepository>();
+            services.AddHttpClient<IMovieRecommendationEngineService, MovieRecommendationEngineService>();
+            services.AddHttpClient<ITheMovieDBService, TheMovieDBService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
