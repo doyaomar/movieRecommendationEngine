@@ -8,6 +8,6 @@ namespace MovieRecommendationEngine.Client.Models
         public string Title { get; set; }
         public string Genres { get; set; }
 
-        public virtual ICollection<Link> Links { get; set; }
+        //public List<Link> Links { get; set; }
     }
 }

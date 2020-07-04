@@ -1,7 +1,33 @@
 ﻿@page "/"
+@inject IMovieRecommendationEngineRepository _repo
 
-<h1>Hello, world!</h1>
+    <BlazoredTypeahead @onse="IncrementCount" SearchMethod="@SearchMovies"
+                       @bind-Value="@selectMovie"
+                       Debounce="500">
+        <SelectedTemplate>
+            @context.Title
+        </SelectedTemplate>
+        <ResultTemplate>
+            @context.Title (@context.Genres)
+        </ResultTemplate>
+        <NotFoundTemplate>
+            Sorry, there weren't any search results.
+        </NotFoundTemplate>
+    </BlazoredTypeahead>
 
-Welcome to your new app.
+    <p>Current count: @currentCount</p>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code{
+    private Movie selectMovie;
+    private int currentCount = 0;
+
+    private async Task<IEnumerable<Movie>> SearchMovies(string searchText)
+    {
+        return await _repo.GetMovieByTitle(searchText).ConfigureAwait(false);
+    }
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+ }
