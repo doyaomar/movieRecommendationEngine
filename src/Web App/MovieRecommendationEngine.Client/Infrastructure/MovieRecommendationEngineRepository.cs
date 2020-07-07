@@ -40,5 +40,10 @@ namespace MovieRecommendationEngine.Client.Infrastructure
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
+
+        public async Task<IEnumerable<Movie>> GetTop(int top)
+        {
+            return await _context.Movies.OrderBy(x => x.MovieId).Take(top).ToListAsync().ConfigureAwait(false);
+        }
     }
 }

@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 
 namespace MovieRecommendationEngine.Client.Abstractions
 {
-    interface IMovieRecommendationEngineRepository
+    public interface IMovieRecommendationEngineRepository
     {
         Task<Movie> GetMovieById(int movieId);
 
         Task<int> GetTmdbIdById(int moviedId);
 
         Task<IEnumerable<Movie>> GetMovieByTitle(string title);
+
+        Task<IEnumerable<Movie>> GetTop(int top);
     }
 }

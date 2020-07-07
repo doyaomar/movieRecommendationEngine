@@ -1,13 +1,8 @@
 ﻿@page "/fetchdata"
-@using Infrastructure
-@using Models
-@using Microsoft.EntityFrameworkCore
 
-@inject MovieLensContext _context
+@inject IMovieRecommendationEngineRepository _repo
 
 <h1>Movies</h1>
-
-<p>This component demonstrates fetching data from a service.</p>
 
 @if (movies == null)
 {
@@ -37,10 +32,10 @@ else
 }
 
 @code {
-    private List<Movie> movies;
+    private IEnumerable<Movie> movies;
 
     protected override async Task OnInitializedAsync()
     {
-        movies = await _context.Movies.OrderBy(x => x.MovieId).Take(100).ToListAsync().ConfigureAwait(false);
+        movies = await _repo.GetTop(100).ConfigureAwait(false);
     }
 }

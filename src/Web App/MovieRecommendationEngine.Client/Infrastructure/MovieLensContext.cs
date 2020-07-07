@@ -18,17 +18,27 @@ namespace MovieRecommendationEngine.Client.Infrastructure
 
         public virtual DbSet<Movie> Movies { get; set; }
 
-        //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //        {
-        //            if (!optionsBuilder.IsConfigured)
-        //            {
-        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-        //                optionsBuilder.UseSqlServer("server=.; Trusted_Connection=True; Database=MovieLens");
-        //            }
-        //        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Link>(entity =>
+            {
+                entity.ToTable("Links");
+
+                entity.HasNoKey();
+
+                entity.Property(e => e.ImdbId).HasColumnName("imdbId");
+
+                entity.Property(e => e.MovieId).HasColumnName("movieId");
+
+                entity.Property(e => e.TmdbId).HasColumnName("tmdbId");
+
+                entity.HasOne(d => d.Movie)
+                    .WithMany()
+                    .HasForeignKey(d => d.MovieId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Links_Movies");
+            });
+
             modelBuilder.Entity<Movie>(entity =>
             {
                 entity.ToTable("Movies");
@@ -55,25 +65,6 @@ namespace MovieRecommendationEngine.Client.Infrastructure
 
                 //entity
                 //.UsePropertyAccessMode(PropertyAccessMode.Property);
-            });
-
-            modelBuilder.Entity<Link>(entity =>
-            {
-                entity.ToTable("Links");
-
-                entity.HasNoKey();
-
-                entity.Property(e => e.ImdbId).HasColumnName("imdbId");
-
-                entity.Property(e => e.MovieId).HasColumnName("movieId");
-
-                entity.Property(e => e.TmdbId).HasColumnName("tmdbId");
-
-                entity.HasOne(d => d.Movie)
-                    .WithMany()
-                    .HasForeignKey(d => d.MovieId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Links_Movies");
             });
 
             OnModelCreatingPartial(modelBuilder);
