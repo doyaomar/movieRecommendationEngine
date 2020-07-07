@@ -24,7 +24,7 @@ namespace MovieRecommendationEngine.Client.Services
             _appSettings = appSettings.Value ?? throw new ArgumentNullException(nameof(appSettings));
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
-            _recommendationEngineApiBaseUrl = $"{_appSettings.ThemoviedbApiKey }/movies/";
+            _recommendationEngineApiBaseUrl = $"{_appSettings.RecommendationEngineApiUrl }/movies/";
         }
 
         public async Task<IEnumerable<int>> GetRecommendationByCollabFiltering(List<RatingDto> watchedMovies)

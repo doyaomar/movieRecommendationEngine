@@ -18,15 +18,6 @@ namespace MovieRecommendationEngine.Client.Infrastructure
 
         public virtual DbSet<Movie> Movies { get; set; }
 
-        //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //        {
-        //            if (!optionsBuilder.IsConfigured)
-        //            {
-        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-        //                optionsBuilder.UseSqlServer("server=.; Trusted_Connection=True; Database=MovieLens");
-        //            }
-        //        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Link>(entity =>
@@ -65,6 +56,15 @@ namespace MovieRecommendationEngine.Client.Infrastructure
                 entity.Property(e => e.Title)
                     .HasColumnName("title")
                     .HasMaxLength(200);
+
+                //entity.HasMany(m => m.Links)
+                //    .WithOne(m => m.Movie)
+                //    .HasForeignKey(d => d.MovieId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_Links_Movies");
+
+                //entity
+                //.UsePropertyAccessMode(PropertyAccessMode.Property);
             });
 
             OnModelCreatingPartial(modelBuilder);

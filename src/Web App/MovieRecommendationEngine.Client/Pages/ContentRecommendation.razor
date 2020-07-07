@@ -1,0 +1,43 @@
+﻿@page "/contentrecommendation"
+@inject IMovieRecommendationEngineRepository _repo
+@inject MovieRecommendationService _movieRecommendationService
+
+<h1>Content Recommendation</h1>
+
+<BlazoredTypeahead SearchMethod="@SearchMovies"
+                   @bind-Value="@selectedMovie"
+                   Debounce="500">
+    <SelectedTemplate>
+        @context.Title
+    </SelectedTemplate>
+    <ResultTemplate>
+        @context.Title (@context.Genres)
+    </ResultTemplate>
+    <NotFoundTemplate>
+        Sorry, there weren't any search results.
+    </NotFoundTemplate>
+</BlazoredTypeahead>
+
+<hr />
+
+@if (selectedMovie != null)
+{
+    var movies = _movieRecommendationService.GetRecommendedMovies(selectedMovie.MovieId).Result;
+
+    foreach (var movie in movies)
+    {
+        <img src="@movie.posterUri" alt="@movie.Title" />
+    }
+}
+
+@code{
+
+    private Movie selectedMovie;
+
+    private async Task<IEnumerable<Movie>> SearchMovies(string searchText)
+    {
+        return await _repo.GetMovieByTitle(searchText).ConfigureAwait(false);
+    }
+}
+
+

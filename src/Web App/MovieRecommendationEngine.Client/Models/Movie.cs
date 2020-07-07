@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace MovieRecommendationEngine.Client.Models
+﻿namespace MovieRecommendationEngine.Client.Models
 {
     public partial class Movie
     {
@@ -8,6 +6,9 @@ namespace MovieRecommendationEngine.Client.Models
         public string Title { get; set; }
         public string Genres { get; set; }
 
-        public virtual ICollection<Link> Links { get; set; }
+        [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+        public string posterUri { get; set; }
+
+        //public List<Link> Links { get; set; }
     }
 }

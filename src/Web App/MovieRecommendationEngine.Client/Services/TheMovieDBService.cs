@@ -30,9 +30,14 @@ namespace MovieRecommendationEngine.Client.Services
 
             var response = await _httpClient.GetAsync(uri).ConfigureAwait(false);
 
-            response.EnsureSuccessStatusCode();
-            var responseAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
 
+            response.EnsureSuccessStatusCode();
+
+            var responseAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<MovieDto>(responseAsString);
         }

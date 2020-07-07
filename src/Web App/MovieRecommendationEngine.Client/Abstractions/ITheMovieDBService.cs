@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace MovieRecommendationEngine.Client.Abstractions
 {
-    interface ITheMovieDBService
+    public interface ITheMovieDBService
     {
         Task<MovieDto> GetMovieById(int tmdbId);
     }
