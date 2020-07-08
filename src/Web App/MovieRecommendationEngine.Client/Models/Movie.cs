@@ -1,4 +1,6 @@
-﻿namespace MovieRecommendationEngine.Client.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MovieRecommendationEngine.Client.Models
 {
     public partial class Movie
     {
@@ -6,8 +8,11 @@
         public string Title { get; set; }
         public string Genres { get; set; }
 
-        [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+        [NotMapped]
         public string posterUri { get; set; }
+
+        [NotMapped]
+        public string Overview { get; set; }
 
         //public List<Link> Links { get; set; }
     }

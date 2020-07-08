@@ -20,15 +20,24 @@
 
 <hr />
 
-@if (selectedMovie != null)
-{
-    var movies = _movieRecommendationService.GetRecommendedMovies(selectedMovie.MovieId).Result;
-
-    foreach (var movie in movies)
+<div class="card-deck">
+    @if (selectedMovie != null)
     {
-        <img src="@movie.posterUri" alt="@movie.Title" />
+        var movies = _movieRecommendationService.GetRecommendedMovies(selectedMovie.MovieId).Result;
+
+        foreach (var movie in movies)
+        {
+
+            <div class="card">
+                <img class="card-img-top" src="@movie.posterUri" alt="@movie.Title">
+                <div class="card-body">
+                    <h5 class="card-title">@movie.Title</h5>
+                    <p class="card-text">@movie.Overview</p>
+                </div>
+            </div>
+        }
     }
-}
+</div>
 
 @code{
 
