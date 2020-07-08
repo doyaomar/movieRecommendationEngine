@@ -13,5 +13,7 @@ namespace MovieRecommendationEngine.Client.Models
         public string BackdropPath { get; set; }
 
         public string Homepage { get; set; }
+
+        public string Overview { get; set; }
     }
 }

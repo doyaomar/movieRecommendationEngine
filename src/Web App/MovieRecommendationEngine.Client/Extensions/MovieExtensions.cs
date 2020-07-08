@@ -14,7 +14,8 @@ namespace MovieRecommendationEngine.Client.Extensions
             return new Movie
             {
                 posterUri = $"{imageUrl}/t/p/w500{item.PosterPath ?? item.BackdropPath ?? string.Empty}",
-                Title = item.Title
+                Title = item.Title,
+                Overview = item.Overview
             };
         }
     }
