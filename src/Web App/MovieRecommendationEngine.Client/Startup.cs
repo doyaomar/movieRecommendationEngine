@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MovieRecommendationEngine.Client.Data;
+using MovieRecommendationEngine.Client.Abstractions;
+using MovieRecommendationEngine.Client.Infrastructure;
+using MovieRecommendationEngine.Client.Services;
 
 namespace MovieRecommendationEngine.Client
 {
@@ -28,7 +25,19 @@ namespace MovieRecommendationEngine.Client
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+
+            //adding conf
+            services.Configure<AppSettings>(Configuration);
+
+            //adding ef core context
+            services.AddDbContext<MovieLensContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("MovieLensDatabase")), ServiceLifetime.Scoped);
+
+            //add  my services
+            services.AddScoped<IMovieRecommendationEngineRepository, MovieRecommendationEngineRepository>();
+            services.AddHttpClient<IMovieRecommendationEngineService, MovieRecommendationEngineService>();
+            services.AddHttpClient<ITheMovieDBService, TheMovieDBService>();
+            services.AddTransient<MovieRecommendationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

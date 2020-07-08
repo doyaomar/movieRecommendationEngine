@@ -1,13 +1,10 @@
 ﻿@page "/fetchdata"
 
-@using MovieRecommendationEngine.Client.Data
-@inject WeatherForecastService ForecastService
+@inject IMovieRecommendationEngineRepository _repo
 
-<h1>Weather forecast</h1>
+<h1>Movies</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
-
-@if (forecasts == null)
+@if (movies == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -16,20 +13,18 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Genres</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var movie in movies)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@movie.MovieId</td>
+                    <td>@movie.Title</td>
+                    <td>@movie.Genres</td>
                 </tr>
             }
         </tbody>
@@ -37,10 +32,10 @@ else
 }
 
 @code {
-    private WeatherForecast[] forecasts;
+    private IEnumerable<Movie> movies;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        movies = await _repo.GetTop(100).ConfigureAwait(false);
     }
 }
