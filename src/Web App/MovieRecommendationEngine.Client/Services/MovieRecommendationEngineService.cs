@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace MovieRecommendationEngine.Client.Services
 {
+    /// <summary>
+    /// MovieRecommendationEngineService
+    /// </summary>
+    /// <seealso cref="MovieRecommendationEngine.Client.Abstractions.IMovieRecommendationEngineService" />
     public class MovieRecommendationEngineService : IMovieRecommendationEngineService
     {
         private readonly HttpClient _httpClient;
@@ -19,6 +23,16 @@ namespace MovieRecommendationEngine.Client.Services
 
         private readonly string _recommendationEngineApiBaseUrl;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MovieRecommendationEngineService"/> class.
+        /// </summary>
+        /// <param name="httpClient">The HTTP client.</param>
+        /// <param name="appSettings">The application settings.</param>
+        /// <exception cref="ArgumentNullException">
+        /// appSettings
+        /// or
+        /// httpClient
+        /// </exception>
         public MovieRecommendationEngineService(HttpClient httpClient, IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value ?? throw new ArgumentNullException(nameof(appSettings));
@@ -27,9 +41,14 @@ namespace MovieRecommendationEngine.Client.Services
             _recommendationEngineApiBaseUrl = $"{_appSettings.RecommendationEngineApiUrl }/movies/";
         }
 
-        public async Task<IEnumerable<int>> GetRecommendationByCollabFiltering(List<RatingDto> watchedMovies)
+        /// <summary>
+        /// Gets the recommendation by collab filtering.
+        /// </summary>
+        /// <param name="watchedMovies">The watched movies.</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<int>> GetRecommendationByCollabFiltering(WatchedMoviesDto watchedMovies)
         {
-            if (watchedMovies is null || !watchedMovies.Any())
+            if (!watchedMovies?.WatchedMovies?.Any() == true)
             {
                 return null;
             }
@@ -45,6 +64,12 @@ namespace MovieRecommendationEngine.Client.Services
             return JsonConvert.DeserializeObject<List<int>>(responseString);
         }
 
+        /// <summary>
+        /// Gets the recommendation by content filtering.
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <param name="numberOfElements">The number of elements.</param>
+        /// <returns></returns>
         public async Task<IEnumerable<int>> GetRecommendationByContentFiltering(int movieId, int numberOfElements)
         {
             if (numberOfElements <= 0)

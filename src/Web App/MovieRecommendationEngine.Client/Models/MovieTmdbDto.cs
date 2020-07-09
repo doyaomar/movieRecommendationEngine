@@ -1,20 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Newtonsoft.Json;
 
 namespace MovieRecommendationEngine.Client.Models
 {
     /// <summary>
-    /// Movie
+    /// MovieTmdbDto
     /// </summary>
-    public partial class Movie
+    public class MovieTmdbDto
     {
-        /// <summary>
-        /// Gets or sets the movie identifier.
-        /// </summary>
-        /// <value>
-        /// The movie identifier.
-        /// </value>
-        public int MovieId { get; set; }
-
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
@@ -24,21 +16,30 @@ namespace MovieRecommendationEngine.Client.Models
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the genres.
+        /// Gets or sets the poster path.
         /// </summary>
         /// <value>
-        /// The genres.
+        /// The poster path.
         /// </value>
-        public string Genres { get; set; }
+        [JsonProperty("poster_path")]
+        public string PosterPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the poster URI.
+        /// Gets or sets the backdrop path.
         /// </summary>
         /// <value>
-        /// The poster URI.
+        /// The backdrop path.
         /// </value>
-        [NotMapped]
-        public string PosterUri { get; set; }
+        [JsonProperty("backdrop_path")]
+        public string BackdropPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the homepage.
+        /// </summary>
+        /// <value>
+        /// The homepage.
+        /// </value>
+        public string Homepage { get; set; }
 
         /// <summary>
         /// Gets or sets the overview.
@@ -46,7 +47,6 @@ namespace MovieRecommendationEngine.Client.Models
         /// <value>
         /// The overview.
         /// </value>
-        [NotMapped]
         public string Overview { get; set; }
     }
 }
