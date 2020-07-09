@@ -3,8 +3,16 @@ using System.Threading.Tasks;
 
 namespace MovieRecommendationEngine.Client.Abstractions
 {
+    /// <summary>
+    /// ITheMovieDBService
+    /// </summary>
     public interface ITheMovieDBService
     {
-        Task<MovieDto> GetMovieById(int tmdbId);
+        /// <summary>
+        /// Gets the movie by identifier.
+        /// </summary>
+        /// <param name="tmdbId">The TMDB identifier.</param>
+        /// <returns></returns>
+        Task<MovieTmdbDto> GetMovieById(int tmdbId);
     }
 }
