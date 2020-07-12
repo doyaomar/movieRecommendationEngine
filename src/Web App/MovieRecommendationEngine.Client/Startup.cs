@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,12 +28,8 @@ namespace MovieRecommendationEngine.Client
             //adding conf
             services.Configure<AppSettings>(Configuration);
 
-            //adding ef core context
-            services.AddDbContext<MovieLensContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("MovieLensDatabase")), ServiceLifetime.Scoped);
-
-            //add  my services
-            services.AddScoped<IMovieRecommendationEngineRepository, MovieRecommendationEngineRepository>();
+            //add my services
+            services.AddTransient<IMovieRecommendationEngineRepository, MovieRecommendationEngineRepository>();
             services.AddHttpClient<IMovieRecommendationEngineService, MovieRecommendationEngineService>();
             services.AddHttpClient<ITheMovieDBService, TheMovieDBService>();
             services.AddTransient<MovieRecommendationService>();

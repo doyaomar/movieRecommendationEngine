@@ -24,11 +24,11 @@ namespace MovieRecommendationEngine.Client.Abstractions
         Task<int> GetTmdbIdById(int moviedId);
 
         /// <summary>
-        /// Gets the movie by title.
+        /// Finds the movie by title.
         /// </summary>
         /// <param name="title">The title.</param>
         /// <returns></returns>
-        Task<IEnumerable<Movie>> GetMovieByTitle(string title);
+        Task<IEnumerable<Movie>> FindMovieByTitle(string title);
 
         /// <summary>
         /// Gets the top.

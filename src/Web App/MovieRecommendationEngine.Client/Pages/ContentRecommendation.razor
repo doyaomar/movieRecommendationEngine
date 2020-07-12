@@ -5,7 +5,7 @@
 <h1>Content Recommendation</h1>
 
 <BlazoredTypeahead SearchMethod="@SearchMovies"
-                   @bind-Value="@selectedMovie"
+                   @bind-Value="@SelectedMovie"
                    Debounce="500">
     <SelectedTemplate>
         @context.Title
@@ -21,9 +21,9 @@
 <hr />
 
 <div class="card-deck">
-    @if (selectedMovie != null)
+    @if (SelectedMovie != null)
     {
-        var movies = _movieRecommendationService.GetRecommendedMovies(selectedMovie.MovieId).Result;
+        var movies = _movieRecommendationService.GetRecommendedMovies(SelectedMovie.MovieId).Result;
 
         foreach (var movie in movies)
         {
@@ -41,11 +41,11 @@
 
 @code{
 
-    private Movie selectedMovie;
+    private Movie SelectedMovie { get; set; }
 
     private async Task<IEnumerable<Movie>> SearchMovies(string searchText)
     {
-        return await _repo.GetMovieByTitle(searchText).ConfigureAwait(false);
+        return await _repo.FindMovieByTitle(searchText);
     }
 }
 

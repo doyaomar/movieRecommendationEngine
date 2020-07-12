@@ -9,12 +9,12 @@ namespace MovieRecommendationEngine.Client.Models
     public class WatchedMoviesDto
     {
         /// <summary>
-        /// Gets or sets the watched movies.
+        /// Gets or sets the ratings.
         /// </summary>
         /// <value>
-        /// The watched movies.
+        /// The ratings.
         /// </value>
         [JsonProperty("watched_movies")]
-        public IEnumerable<RatingDto> WatchedMovies { get; set; }
+        public List<RatingDto> Ratings { get; set; }
     }
 }

@@ -48,7 +48,7 @@ namespace MovieRecommendationEngine.Client.Services
         /// <returns></returns>
         public async Task<IEnumerable<int>> GetRecommendationByCollabFiltering(WatchedMoviesDto watchedMovies)
         {
-            if (!watchedMovies?.WatchedMovies?.Any() == true)
+            if (!watchedMovies?.Ratings?.Any() == true)
             {
                 return null;
             }

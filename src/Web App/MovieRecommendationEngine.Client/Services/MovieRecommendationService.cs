@@ -125,7 +125,7 @@ namespace MovieRecommendationEngine.Client.Services
             {
                 foreach (var movie in similarMovies)
                 {
-                    var tmdbId = await _movieRecommendationEngineRepository.GetTmdbIdById(movie).ConfigureAwait(false);
+                    var tmdbId = await _movieRecommendationEngineRepository.GetTmdbIdById(movie);
                     var tmdbMovie = await _theMovieDBService.GetMovieById(tmdbId).ConfigureAwait(false);
 
                     if (tmdbMovie != null)
