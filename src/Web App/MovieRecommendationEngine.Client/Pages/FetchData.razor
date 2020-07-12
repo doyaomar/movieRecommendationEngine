@@ -36,6 +36,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        movies = await _repo.GetTop(100).ConfigureAwait(false);
+        movies = await _repo.GetTop(100);
     }
 }

@@ -44,5 +44,27 @@
         /// The themoviedb API key v4.
         /// </value>
         public string ThemoviedbApiKeyV4 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the connection strings.
+        /// </summary>
+        /// <value>
+        /// The connection strings.
+        /// </value>
+        public ConnectionStrings ConnectionStrings { get; set; }
+    }
+
+    /// <summary>
+    /// ConnectionStrings
+    /// </summary>
+    public class ConnectionStrings
+    {
+        /// <summary>
+        /// Gets or sets the movie lens database.
+        /// </summary>
+        /// <value>
+        /// The movie lens database.
+        /// </value>
+        public string MovieLensDatabase { get; set; }
     }
 }

@@ -1,0 +1,110 @@
+﻿@page "/collabrecommendation"
+@inject IMovieRecommendationEngineRepository _repo
+@inject MovieRecommendationService _movieRecommendationService
+
+<h1>Collab Recommendation</h1>
+
+<BlazoredTypeahead SearchMethod="@SearchMovies"
+                   @bind-Value="@SelectedMovie"
+                   Debounce="500">
+    <SelectedTemplate>
+        @context.Title
+    </SelectedTemplate>
+    <ResultTemplate>
+        @context.Title (@context.Genres)
+    </ResultTemplate>
+    <NotFoundTemplate>
+        Sorry, there weren't any search results.
+    </NotFoundTemplate>
+</BlazoredTypeahead>
+
+<hr />
+
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+        <input type="number" class="btn btn-secondary" min="1" max="5" @bind="@SelectedRating">
+    </div>
+    <div class="btn-group" role="group" aria-label="Second group">
+        <button type="button" class="btn btn-primary" @onclick="@AddRating">Add</button>
+    </div>
+</div>
+
+<hr />
+
+<ul class="list-group">
+    @if (WatchedMovies?.Ratings.Any() == true)
+    {
+        foreach (var movie in WatchedMovies.Ratings)
+        {
+            <li class="list-group-item">
+                @movie.Title
+                Rated :
+                <span class="badge badge-light">@movie.Rating</span>
+                <button type="button" class="close" aria-label="Close" @onclick="(() => DeleteRating(movie))">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </li>
+        }
+    }
+</ul>
+
+<hr />
+
+<div class="card-columns column" style="column-count: 5;">
+        @if (similarMovies?.Any() == true)
+        {
+            foreach (var movie in similarMovies)
+            {
+
+                <div class="card">
+                    <img class="card-img-top" src="@movie.PosterUri" alt="@movie.Title">
+                    <div class="card-body">
+                        <h5 class="card-title">@movie.Title</h5>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+@code{
+
+    private Movie SelectedMovie { get; set; }
+
+    private short SelectedRating { get; set; } = 1;
+
+    private WatchedMoviesDto WatchedMovies { get; set; } = new WatchedMoviesDto { Ratings = new List<RatingDto>() };
+
+    private IEnumerable<Movie> similarMovies;
+
+    private async Task<IEnumerable<Movie>> SearchMovies(string searchText)
+    {
+        return await _repo.FindMovieByTitle(searchText);
+    }
+
+    private async Task AddRating()
+    {
+        if (SelectedMovie != null && !WatchedMovies.Ratings.Exists(x => x.MovieId == SelectedMovie.MovieId))
+        {
+            WatchedMovies.Ratings.Add(new RatingDto { MovieId = SelectedMovie.MovieId, Rating = SelectedRating, Title = SelectedMovie.Title });
+
+            await GetSimilarMovies();
+        }
+    }
+
+    private async Task DeleteRating(RatingDto movie)
+    {
+        if (SelectedMovie != null)
+        {
+            WatchedMovies.Ratings.Remove(movie);
+
+            await GetSimilarMovies();
+        }
+    }
+
+    private async Task GetSimilarMovies()
+    {
+        similarMovies = await _movieRecommendationService.GetRecommendedMovies(WatchedMovies);
+    }
+}
+
+
