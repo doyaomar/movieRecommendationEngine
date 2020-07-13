@@ -97,6 +97,10 @@ namespace MovieRecommendationEngine.Client.Services
             {
                 var similarMovies = await _movieRecommendationEngineService.GetRecommendationByCollabFiltering(watchedMovies).ConfigureAwait(false);
 
+                similarMovies = similarMovies
+                    .OrderBy(x => x)
+                    .Take(20);
+
                 var tmdbMovie = await GetTmdbMovies(similarMovies).ConfigureAwait(false);
 
                 if (tmdbMovie != null)
