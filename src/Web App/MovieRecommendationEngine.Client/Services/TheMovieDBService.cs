@@ -24,7 +24,7 @@ namespace MovieRecommendationEngine.Client.Services
             _theMovieDbApiBaseUrl = $"{_appSettings.ThemoviedbApiUrl}/3/movie/";
         }
 
-        public async Task<MovieDto> GetMovieById(int tmdbId)
+        public async Task<MovieTmdbDto> GetMovieById(int tmdbId)
         {
             var uri = $"{_theMovieDbApiBaseUrl}{tmdbId}?api_key={_appSettings.ThemoviedbApiKey}";
 
@@ -39,7 +39,7 @@ namespace MovieRecommendationEngine.Client.Services
 
             var responseAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            return JsonConvert.DeserializeObject<MovieDto>(responseAsString);
+            return JsonConvert.DeserializeObject<MovieTmdbDto>(responseAsString);
         }
     }
 }
