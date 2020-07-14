@@ -51,20 +51,29 @@
 <hr />
 
 <div class="card-columns column" style="column-count: 5;">
-        @if (similarMovies?.Any() == true)
-        {
-            foreach (var movie in similarMovies)
-            {
+    @if (similarMovies is null)
+    {
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
 
-                <div class="card">
-                    <img class="card-img-top" src="@movie.PosterUri" alt="@movie.Title">
-                    <div class="card-body">
-                        <h5 class="card-title">@movie.Title</h5>
-                    </div>
+    }
+    else
+    {
+        foreach (var movie in similarMovies)
+        {
+
+            <div class="card">
+                <img class="card-img-top" src="@movie.PosterUri" alt="@movie.Title">
+                <div class="card-body">
+                    <h5 class="card-title">@movie.Title</h5>
                 </div>
-            }
+            </div>
         }
-    </div>
+    }
+</div>
 
 @code{
 
@@ -74,7 +83,7 @@
 
     private WatchedMoviesDto WatchedMovies { get; set; } = new WatchedMoviesDto { Ratings = new List<RatingDto>() };
 
-    private IEnumerable<Movie> similarMovies;
+    private IEnumerable<Movie> similarMovies = new List<Movie>();
 
     private async Task<IEnumerable<Movie>> SearchMovies(string searchText)
     {
@@ -85,6 +94,7 @@
     {
         if (SelectedMovie != null && !WatchedMovies.Ratings.Exists(x => x.MovieId == SelectedMovie.MovieId))
         {
+            similarMovies = null;
             WatchedMovies.Ratings.Add(new RatingDto { MovieId = SelectedMovie.MovieId, Rating = SelectedRating, Title = SelectedMovie.Title });
 
             await GetSimilarMovies();
@@ -97,6 +107,7 @@
     {
         if (SelectedMovie != null)
         {
+            similarMovies = null;
             WatchedMovies.Ratings.Remove(movie);
 
             await GetSimilarMovies();
@@ -105,7 +116,7 @@
 
     private async Task GetSimilarMovies()
     {
-        similarMovies = await _movieRecommendationService.GetRecommendedMovies(WatchedMovies);
+        similarMovies = await _movieRecommendationService.GetRecommendedMovies(WatchedMovies,15);
     }
 }
 
