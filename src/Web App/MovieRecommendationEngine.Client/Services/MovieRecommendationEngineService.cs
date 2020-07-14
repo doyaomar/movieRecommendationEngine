@@ -59,7 +59,7 @@ namespace MovieRecommendationEngine.Client.Services
             var response = await _httpClient.PostAsync(uri, stringContent).ConfigureAwait(false);
 
             response.EnsureSuccessStatusCode();
-            var responseString = await response.Content.ReadAsStringAsync();
+            var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<List<int>>(responseString);
         }
@@ -82,7 +82,7 @@ namespace MovieRecommendationEngine.Client.Services
             var response = await _httpClient.GetAsync(uri).ConfigureAwait(false);
 
             response.EnsureSuccessStatusCode();
-            var responseString = await response.Content.ReadAsStringAsync();
+            var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<List<int>>(responseString);
         }

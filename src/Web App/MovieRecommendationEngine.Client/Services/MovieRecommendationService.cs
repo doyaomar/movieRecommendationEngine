@@ -88,8 +88,9 @@ namespace MovieRecommendationEngine.Client.Services
         /// Gets the recommended movies.
         /// </summary>
         /// <param name="watchedMovies">The watched movies.</param>
+        /// <param name="numberOfElements">The number of elements.</param>
         /// <returns></returns>
-        public async Task<IEnumerable<Movie>> GetRecommendedMovies(WatchedMoviesDto watchedMovies)
+        public async Task<IEnumerable<Movie>> GetRecommendedMovies(WatchedMoviesDto watchedMovies, int numberOfElements)
         {
             var recommendendMovies = new List<Movie>();
 
@@ -97,9 +98,9 @@ namespace MovieRecommendationEngine.Client.Services
             {
                 var similarMovies = await _movieRecommendationEngineService.GetRecommendationByCollabFiltering(watchedMovies).ConfigureAwait(false);
 
-                similarMovies = similarMovies
-                    .OrderBy(x => x)
-                    .Take(20);
+                similarMovies = similarMovies?
+                    .OrderBy(x => x)?
+                    .Take(numberOfElements);
 
                 var tmdbMovie = await GetTmdbMovies(similarMovies).ConfigureAwait(false);
 
@@ -129,7 +130,7 @@ namespace MovieRecommendationEngine.Client.Services
             {
                 foreach (var movie in similarMovies)
                 {
-                    var tmdbId = await _movieRecommendationEngineRepository.GetTmdbIdById(movie);
+                    var tmdbId = await _movieRecommendationEngineRepository.GetTmdbIdById(movie).ConfigureAwait(false);
                     var tmdbMovie = await _theMovieDBService.GetMovieById(tmdbId).ConfigureAwait(false);
 
                     if (tmdbMovie != null)

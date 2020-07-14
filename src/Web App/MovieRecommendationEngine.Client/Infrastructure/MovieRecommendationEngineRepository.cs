@@ -43,7 +43,7 @@ namespace MovieRecommendationEngine.Client.Infrastructure
             {
                 return await _context.Movies
                         //.Include(movie => movie.Links)
-                        .FirstOrDefaultAsync(movie => movie.MovieId == movieId);
+                        .FirstOrDefaultAsync(movie => movie.MovieId == movieId).ConfigureAwait(false);
             }
 
         }
@@ -60,7 +60,7 @@ namespace MovieRecommendationEngine.Client.Infrastructure
                 return await Task.FromResult(_context.Links
                 .FirstOrDefault(link => link.MovieId == moviedId && link.TmdbId.HasValue)
                 .TmdbId.Value
-                );
+                ).ConfigureAwait(false);
             }
         }
 
@@ -75,7 +75,7 @@ namespace MovieRecommendationEngine.Client.Infrastructure
             {
                 return await _context.Movies
                 .Where(movie => movie.Title.ToLower().Contains(title.ToLower()))
-                .ToListAsync();
+                .ToListAsync().ConfigureAwait(false);
             }
         }
 
@@ -90,7 +90,7 @@ namespace MovieRecommendationEngine.Client.Infrastructure
             {
                 return await _context.Movies.OrderBy(x => x.MovieId)
                 .Take(top)
-                .ToListAsync();
+                .ToListAsync().ConfigureAwait(false);
             }
         }
     }
